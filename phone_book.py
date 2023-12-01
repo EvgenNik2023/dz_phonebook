@@ -20,18 +20,24 @@ def find_human(file_name: str) -> str:
         i = int(input('Введите 0 для поиска по фамилии или 1 для поиска по имени: '))
         marker = input('Введите имя(фамилию): ')
         res = list(filter(lambda x: x.split(', ')[i] == marker, date))
-
-        while len(res) == 0:
-            q = input('  Нет данных. Нажмите 1 для продолжения поиска или 2 для выхода в основное меню ')
-            if q == '1':
-                i = int(input('Введите 0 для поиска по фамилии или 1 для поиска по имени: '))
-                marker = input('Введите имя(фамилию): ')
-                res = list(filter(lambda x: x.split(', ')[i] == marker, date))
-            else:
-                return res
+        
+    while len(res) == 0:
+        q = input('  Нет данных. Нажмите 1 для продолжения поиска или 2 для выхода в основное меню ')
+        if q == '1':
+            i = int(input('Введите 0 для поиска по фамилии или 1 для поиска по имени: '))
+            marker = input('Введите имя(фамилию): ')
+            res = list(filter(lambda x: x.split(', ')[i] == marker, date))
+        else:
+            return res
             
-        print()
-        return res
+    output(res)
+
+    if len(res) > 1:
+        q = int(input('Для уточнения введите порядковый номер контакта: ')) - 1
+        res = [res[q]]
+
+    print()
+    return res
 
 
 def copy_from_other_list(file_name: str) -> None:
@@ -39,15 +45,7 @@ def copy_from_other_list(file_name: str) -> None:
     data = find_human(file)
     copy_data = ''.join(data)
 
-    # output(data)
-
-    # if len(data) > 1:
-        
-
-    #     only_one = int(input('Для уточнения введите порядковый номер контакта: '))
-
     with open(file_name, 'a', encoding='utf-8') as fd:
-        # fd.write(str(copy_data))
         fd.write (copy_data)
                 
 
@@ -70,13 +68,11 @@ def remove(file_name: str) -> None:
 
 def add_new(file_name: str) -> None:
     
-    # data = input('Введите ФИО и номер телефона: ')
     last_name = input('Введите фамилию: ')
     first_name = input('Введите имя: ')
     patronymic = input('Введите отчество: ')
     phone_number = input('Введите номер телефона: ')
-    # f = open(file_name, 'a', encoding='utf-8')
-    # f.close()
+
     with open(file_name, 'a', encoding='utf-8') as fd:
         fd.write(f'{last_name}, {first_name}, {patronymic}, {phone_number}\n')
 
@@ -95,14 +91,12 @@ def replace(file_name: str) -> None:
     
     with open(file_name, 'r+', encoding='utf-8') as fd:
         date = fd.readlines()
-        # print(date)
+
         s = f'{last_name}, {first_name}, {patronymic}, {phone_number}\n'
         i = date.index(s)
         new_s = f'{new_last_name}, {new_first_name}, {new_patronymic}, {new_phone_number}\n'
         date.remove(s)
         date.insert(i, new_s)
-        # print(date)
-        # fd.writelines(date)
 
     with open(file_name, 'w', encoding='utf-8') as f:
         f.writelines(date)

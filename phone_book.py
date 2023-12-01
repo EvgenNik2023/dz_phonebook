@@ -30,7 +30,6 @@ def find_human(file_name: str) -> str:
             else:
                 return res
             
-        
         print()
         return res
 
@@ -38,7 +37,9 @@ def find_human(file_name: str) -> str:
 def copy_from_other_list(file_name: str) -> None:
     file = input('Введите имя файла для поиска: ')
     data = find_human(file)
-    output(data)
+    copy_data = ''.join(data)
+
+    # output(data)
 
     # if len(data) > 1:
         
@@ -46,11 +47,9 @@ def copy_from_other_list(file_name: str) -> None:
     #     only_one = int(input('Для уточнения введите порядковый номер контакта: '))
 
     with open(file_name, 'a', encoding='utf-8') as fd:
-        fd.write(str(data))
-
-    
-
-    
+        # fd.write(str(copy_data))
+        fd.write (copy_data)
+                
 
 def remove(file_name: str) -> None:
     
